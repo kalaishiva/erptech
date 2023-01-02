@@ -30,6 +30,12 @@ exports.createEnquiry = async(req, res) => {
         })
 
     } catch (error) {
+
+        res.status(400).json({
+            success: false,
+            message: "Enquiry not created",
+
+        })
         console.log(error);
     }
 }

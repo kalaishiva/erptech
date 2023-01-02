@@ -1,9 +1,46 @@
 import { Button, Card, CardContent, Grid, TextField, Typography } from '@mui/material'
-import React from 'react'
+import {Alert} from '@mui/material';
+import React, { useState } from 'react';
+import axios from 'axios';
+
 
 const  Enquiry = () => {
 
+    const[firstName, setFirstName]= useState("");
+    const[lastName, setLastName]= useState("");
+    const[email, setEmail]= useState("");
+    const[phoneNumber, setPhoneNumber]= useState("");
+    const[message, setMessage]= useState("");
+    const[status, setStatus]= useState("");
+
+    console.log(status.length);
+    const createEnquiry = (event) =>{
+        event.preventDefault();
+        submitData();
+      }
+    
+    const submitData = async() =>{
      
+      const enquiryData = {
+       "firstname": firstName,
+        "lastname": lastName,
+        "email": email,
+        "phonenumber": phoneNumber,
+        "message": message,
+      
+        
+      }
+      const res = await axios.post("/enquiry", enquiryData);
+      console.log(res);
+    
+      if(res.status === 200){
+        setStatus(true);
+      }else{
+        setStatus(false);
+      }
+    }
+
+    
   return (
     
   
@@ -17,24 +54,36 @@ const  Enquiry = () => {
                 
 
                     <Grid xs={12} sm={6} item>
-                        <TextField label="First Name" placeholder='Enter your first name' variant="outlined" fullWidth required/>
+                        <TextField label="First Name" placeholder='Enter your first name' variant="outlined" onChange={(e)=>{setFirstName(e.target.value)}} fullWidth required/>
                     </Grid>
                     <Grid xs={12} sm={6} item>
-                        <TextField label="Last Name" placeholder='Enter your last name' variant="outlined" fullWidth required/>
+                        <TextField label="Last Name" placeholder='Enter your last name' variant="outlined" onChange={(e)=>{setLastName(e.target.value)}}  fullWidth required/>
                     </Grid>
                     <Grid xs={12}  item>
-                        <TextField type="email" label="Email" placeholder='Enter your email' variant="outlined" fullWidth required/>
+                        <TextField type="email" label="Email" placeholder='Enter your email' variant="outlined" onChange={(e)=>{setEmail(e.target.value)}} fullWidth required/>
                     </Grid>
                     <Grid xs={12}  item>
-                        <TextField  type="number" label="Phone Number" placeholder='Enter your phone number' variant="outlined" fullWidth required/>
+                        <TextField  type="number" label="Phone Number" placeholder='Enter your phone number' variant="outlined" onChange={(e)=>{setPhoneNumber(e.target.value)}} fullWidth required/>
                     </Grid>
                     <Grid xs={12}  item>
-                        <TextField   label="Message" multiline rows={4} placeholder='Type your message' variant="outlined" fullWidth required/>
+                        <TextField   label="Message" multiline rows={4} placeholder='Type your message' variant="outlined" onChange={(e)=>{setMessage(e.target.value)}} fullWidth required/>
                     </Grid>
                     <Grid xs={12}  item>
-                        <Button type="submit" variant='contained' color='primary' fullWidth>Submit</Button>
+                        <Button type="submit" variant='contained' color='primary' fullWidth onClick={createEnquiry}>Submit</Button>
                     </Grid>
+                    {status ?
+                    <Alert variant="filled" severity="success" >
+                    Enquiry Successfully Submitted
+                  </Alert>: ""
+                   
+                   
+                    }
+                   {/*  //  <Alert variant="filled" severity="error">
+                    //  Sorry Enquiry was not Submitted
+                    // </Alert>  */}
                     
+                    
+
 
                 </Grid>
                 </form>
