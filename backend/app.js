@@ -3,15 +3,25 @@ require("dotenv").config();
 
 //Express
 const express = require('express');
-const app = express();
 
-//Router
-const enquiryRoute = require("./Router/enquiryRoutes");
+const app = express();
+const cors = require("cors");
+
+const { connectToDb } = require("../backend/database/db");
+
+//DB connection
+connectToDb();
+
+
 
 //MiddleWare
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
+
+//Router
+const enquiryRoute = require("./Router/enquiryRoutes");
 app.use("/", enquiryRoute);
 
 
