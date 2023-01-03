@@ -7,7 +7,9 @@ const express = require('express');
 const app = express();
 const cors = require("cors");
 
-const { connectToDb } = require("../backend/database/db");
+//const { connectToDb } = require("../backend/database/db");
+
+const { connectToDb } = require("./database/db");
 
 //DB connection
 connectToDb();
