@@ -13,6 +13,8 @@ const  Enquiry = () => {
     const[message, setMessage]= useState("");
     const[status, setStatus]= useState("");
 
+    const BASE_URL = "https://erptech-production.up.railway.app";
+
     console.log(status.length);
     const createEnquiry = (event) =>{
         event.preventDefault();
@@ -30,7 +32,7 @@ const  Enquiry = () => {
       
         
       }
-      const res = await axios.post("/enquiry", enquiryData);
+      const res = await axios.post(`${BASE_URL}/enquiry`, enquiryData);
       console.log(res);
     
       if(res.status === 200){
